@@ -1,0 +1,27 @@
+<form id="signupForm" role="form" onsubmit="return submitSignupForm();" >
+     {% csrf_token %} <!-- CSRF token is rendered by Django in forms to avoid CSRF attacks -->
+
+   <!-- Iterate over the fields in a form and render them  -->
+   {% for field in signup_form %}
+    <div class="form-group">
+      <!-- Render the input field -->
+      {% if field.errors %}
+          <p class="error">
+          {% for error in field.errors %}
+            {{ error }}
+          {% endfor %}
+          </p>
+        {% endif %}
+          {{ field }}        
+    </div>
+  {% endfor %}
+  
+  {% if signup_form.non_field_errors %}
+    <p class="error">
+          {% for error in signup_form.non_field_errors %}
+            {{ error }}
+          {% endfor %}
+    </p>
+   {% endif %}
+	<input type="submit" class="btn btn-block btn-large btn-info submit-btn" value="Sign Up" />
+</form>

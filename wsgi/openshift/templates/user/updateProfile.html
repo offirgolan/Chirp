@@ -1,0 +1,31 @@
+<div class="profile_image update">
+	<img id="updateProfilePicture" src="{{ MEDIA_URL }}{{ profile_pic }}" >
+</div>
+
+<form id="updateProfileForm" role="form" enctype="multipart/form-data" onsubmit="return submitUpdateProfileForm();" >
+     {% csrf_token %} <!-- CSRF token is rendered by Django in forms to avoid CSRF attacks -->
+
+   <!-- Iterate over the fields in a form and render them  -->
+   {% for field in update_profile_form %}
+    <div class="form-group">
+      <!-- Render the input field -->
+      {% if field.errors %}
+          <p class="error">
+          {% for error in field.errors %}
+            {{ error }}
+          {% endfor %}
+          </p>
+        {% endif %}
+          {{ field }}        
+    </div>
+  {% endfor %}
+  
+  {% if update_profile_form.non_field_errors %}
+    <p class="error">
+          {% for error in update_profile_form.non_field_errors %}
+            {{ error }}
+          {% endfor %}
+    </p>
+   {% endif %}
+	<input type="submit" class="btn btn-block btn-large btn-info submit-btn" value="Update Profile" />
+</form>

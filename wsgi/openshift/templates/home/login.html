@@ -1,0 +1,32 @@
+<form id="loginForm" onsubmit="return submitLoginForm();" role="form">
+     {% csrf_token %} <!-- CSRF token is rendered by Django in forms to avoid CSRF attacks -->
+   
+   <!-- If there are non-field errors in the form,
+        iterate over them one by one and display them.
+    -->
+   
+   <!-- Iterate over the fields in a form and render them  -->
+   {% for field in login_form %}
+    <div class="form-group">
+      <!-- Render the input field -->
+	      {% if field.errors %}
+	      <p class="error">
+	      {% for error in field.errors %}
+	        {{ error }}
+	      {% endfor %}
+	      </p>
+	     {% endif %}
+          
+          {{ field }}
+    </div>
+  {% endfor %}
+  
+  {% if login_form.non_field_errors %}
+    <p class="error">
+          {% for error in login_form.non_field_errors %}
+            {{ error }}
+          {% endfor %}
+    </p>
+   {% endif %}
+	<input type="submit" class="btn btn-block btn-large btn-info submit-btn" value="Login" />
+</form>

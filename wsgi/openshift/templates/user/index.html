@@ -1,0 +1,138 @@
+{% load staticfiles %}
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Chirp</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/ico" href="{% static 'img/favicon.ico' %}" />
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" media="screen">
+    <link rel="stylesheet" href="{% static 'css/bootswatch.min.css' %}">
+	<link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css" media="screen">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="http://bootswatch.com/bower_components/html5shiv/dist/html5shiv.js"></script>
+      <script src="http://bootswatch.com/bower_components/respond/dest/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a href="/dashboard" class="navbar-brand"> <img src="{% static 'img/black-bird-blue.png' %}" height="20px" width"20px"></a>
+          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+        <div class="navbar-collapse collapse" id="navbar-main">
+          <ul class="nav navbar-nav">
+           
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+           	<form id="searchForm" class="navbar-form navbar-left" onsubmit="return submitSearchForm();" role="form">
+                    <input id="search" type="text" class="form-control search" placeholder="Search...">
+            </form>
+	          <li class="dropdown">
+	              <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="download">{{ user.username }}<span class="caret"></span></a>
+	              <ul class="dropdown-menu" aria-labelledby="download">
+	              	<li><a href="/{{ user.username }}">Profile</a></li>
+	                <li><a href="#" data-toggle="modal" data-target="#profileUpdateModal">Settings</a></li>
+	                <li class="divider"></li>
+	                <li><a href="/logout/">Log Out</a></li>
+	              </ul>
+	            </li>
+          </ul>
+
+        </div>
+      </div>
+    </div>
+
+		<div id="wrap">
+		
+		<div id="left_col">
+			<div class="panel panel-info user">
+		        	<div class="panel-heading chirps-heading">
+		                  <h3 class="panel-title">{{currUser.first_name}} {{currUser.last_name}} 
+		                  {% if showFollow %}
+		                  	  <div class="custom-tweet-button">
+		                  	  	{% if not isFollowing %}
+						  	    <a href="follow/" alt ="Follow">
+								    <i class="btn-icon"></i>
+								    <span class="btn-text">Follow</span>
+								  </a>
+						  		{% elif isFollowing %}
+						  		<a href="unfollow/" alt ="Unfollow">
+								    <i class="btn-icon"></i>
+								    <span class="btn-text">Unfollow</span>
+								  </a>
+						  		{% endif %}	
+		                  	  </div>	
+			              {% endif %}
+		                  </h3>
+		                  
+		            </div>
+		            <div class="panel-body">
+		            	<div class="profile_image">
+		            		<img id="dashProfilePicture" src="{{ MEDIA_URL }}{{ profile_pic }}" >
+		            	</div>
+		            </div>
+		            <div id="userData" class="userData">
+		            	{% include "user/userData.html" %}
+		            </div>
+		            {% if compose %}
+		            <div id="composeChirpContainer" class="left-div-addon">
+		            	{% include "user/compose.html" %}
+		            </div>
+		            {% endif %}
+			</div>
+		</div>
+			
+			<div id="right_col">
+				<div class="panel panel-info chirps">
+		        	<div class="panel-heading chirps-heading">
+		                  <h3 class="panel-title">Chirps</h3>
+		            </div>
+		            <div class="panel-body">
+		            	<div id="chirpListContainer">
+		            		{% include "user/chirps.html" %}
+		                </div>
+		            </div>
+		         </div>
+		     </div>
+		</div>
+		        
+	  <!-- Profile Update Modal -->
+    <div class="modal fade" id="profileUpdateModal" tabindex="-1" role="dialog" aria-labelledby="profileUpdateModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="profileUpdateModalLabel">Update Profile</h4>
+      </div>
+      <div id="updateProfileFormContainer" class="modal-body">
+		{% include "user/updateProfile.html" %}
+	</div>
+    </div>
+  </div>
+</div>
+
+		             
+      <footer>
+        
+      </footer>
+
+
+    </div>
+
+
+    <script src="{% static 'js/jquery-1.10.2.min.js' %}"></script>
+    <script src="{% static 'js/jquery-ui.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/bootswatch.js' %}"></script>
+    <script src="{% static 'js/utils.js' %}"></script>
+    <script src="{% static 'js/userActions.js' %}"></script>
+  </body>
+</html>

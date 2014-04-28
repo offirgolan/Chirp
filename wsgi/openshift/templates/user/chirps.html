@@ -1,0 +1,23 @@
+{% load humanize %}
+<div class="list-group">
+{% if chirps %}
+	  {% for chirp in chirps %}
+	  	<div id="chirp-{{ chirp.id }}" class="list-group-item">
+	  		<div class="thumb">
+		  		<img src="{{ MEDIA_URL }}{{ chirp.userProfile.profile_pic }}">
+			 </div>
+			 
+			 <div class="tweet_data">
+			  	<h5 class=""><b>{{chirp.userProfile.user.first_name}} {{chirp.userProfile.user.last_name}}</b> <a href="{% url 'chirp.views.user' chirp.userProfile.user.username %}"> @{{chirp.userProfile.user.username}} </a> &middot; {{ chirp.timestamp| naturaltime }}</h5>
+				 <p class="list-group-item-text"> {{chirp.message|safe}} </p>
+			 </div>
+		</div>
+	  {% endfor %}
+
+{% else %}
+
+<div style="text-align: center; padding: 20px;">  - No Chirps - </div>
+
+{% endif %}
+  
+</div>

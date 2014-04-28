@@ -1,0 +1,7 @@
+README
+setup.py
+Chirp.egg-info/PKG-INFO
+Chirp.egg-info/SOURCES.txt
+Chirp.egg-info/dependency_links.txt
+Chirp.egg-info/requires.txt
+Chirp.egg-info/top_level.txt
